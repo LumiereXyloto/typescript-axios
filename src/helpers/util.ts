@@ -1,0 +1,11 @@
+// 要想区分对象、数组、函数、单纯使用typeof是不行的。
+// 在JS中，可以通过Object.prototype.toString方法，判断某个对象之属于哪种内置类型。
+const toString = Object.prototype.toString
+
+export function isDate(val: any): val is Date {
+  return toString.call(val) === '[object Date]'
+}
+
+export function isObject(val: any): val is Object {
+  return val !== null && typeof val === 'object'
+}
