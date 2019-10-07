@@ -26,3 +26,26 @@ export function processHeaders(headers: any, data: any): any {
 
   return headers
 }
+
+export function parseHeaders(headers: string): any {
+  let parsed = Object.create(null)
+  if (!headers) {
+    return parsed
+  }
+
+  headers.split('\r\n').forEach(line => {
+    // 这里存在一点问题，当headers.date的值中有：时会出现解构赋值错误导致date的部分值被切掉
+    // 暂时还没解决
+    let [key, val] = line.split(':')
+    key = key.trim().toLowerCase()
+    if (!key) {
+      return
+    }
+    if (val) {
+      val = val.trim()
+    }
+    parsed[key] = val
+  })
+
+  return parsed
+}
